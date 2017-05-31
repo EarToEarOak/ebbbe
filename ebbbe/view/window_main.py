@@ -110,6 +110,15 @@ class WindowMain(QMainWindow):
             self.__open(filename)
 
     @Slot()
+    def on_actionSave_triggered(self):
+        filename, _ = QFileDialog.getSaveFileName(self,
+                                                  dir=self._settings.dirFile,
+                                                  filter='Binary files (*.bin)')
+        if filename:
+            self._settings.dirFile, _ = os.path.split(filename)
+            self.__save(filename)
+
+    @Slot()
     def on_actionExit_triggered(self):
         self.close()
 
@@ -170,7 +179,19 @@ class WindowMain(QMainWindow):
                 self._cpu.load(list(data))
                 self.__update(False)
         except struct.error:
-            QMessageBox.critical(self, 'Error', "Files should be 16 bytes in size")
+            QMessageBox.critical(self,
+                                 'Error',
+                                 'Files should be 16 bytes in size')
+
+    def __save(self, filename):
+        try:
+            with open(filename, 'wb') as f:
+                data = struct.pack('B' * 16, *self._cpu.get_ram_dump())
+                f.write(data)
+        except IOError as e:
+            QMessageBox.critical(self,
+                                 'Error',
+                                 'Could not save file:\n{}'.format(e))
 
     def __set_ram_value(self, value):
         self._cpu.set_ram_value(value)
