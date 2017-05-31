@@ -74,6 +74,10 @@ class RegMemory(Register):
         Register.__init__(self, bus)
         self._ram = ram
 
+    def set(self, value):
+        self._data = value
+        self._ram.set_address(value)
+
     def clock(self):
         if self._in:
             self._data = self._bus.get() & 0xf

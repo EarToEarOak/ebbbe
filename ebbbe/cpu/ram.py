@@ -52,6 +52,9 @@ class Ram(object):
     def set(self, data):
         self._data = data
 
+    def set_value(self, value):
+        self._data[self._address] = value
+
     def set_in(self, load):
         self._in = load
 

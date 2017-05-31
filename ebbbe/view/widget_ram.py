@@ -23,52 +23,40 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-from PySide.QtCore import Slot, Signal
+from PySide.QtCore import Qt, Slot, Signal
 from PySide.QtGui import QWidget
 from ebbbe.view.constants import Colour
 from ebbbe.view.ui import load_ui
-from ebbbe.view.widget_led import WidgetLed
 from ebbbe.view.widget_led_bank import WidgetLedBank
 
 from ebbbe.view.widget_dip import WidgetDip
 
 
-class WidgetMar(QWidget):
-    signalSet = Signal(bool, int)
+class WidgetRam(QWidget):
+    signalWrite = Signal(int)
 
     def __init__(self, parent):
         QWidget.__init__(self, parent)
 
         self.customWidgets = {'WidgetLedBank': WidgetLedBank,
-                              'WidgetDip': WidgetDip,
-                              'WidgetLed': WidgetLed}
+                              'WidgetDip': WidgetDip}
 
-        load_ui(self, 'widget_mar.ui')
+        load_ui(self, 'widget_ram.ui')
 
-        self._ledRun.set_colour(Colour.GREEN)
-        self._ledRun.light(True)
-        self._ledSet.set_colour(Colour.RED)
-        self._widgetLeds.set_led_count(4, Colour.YELLOW)
-        self._widgetDip.set_dip_count(4)
-        self._widgetDip.enable(False)
-        self._widgetDip.signalChanged.connect(self.__on_changed)
-
-    def __on_changed(self, value):
-        checked = self._buttonSet.isChecked()
-        self.signalSet.emit(checked, value)
+        self._widgetLeds.set_led_count(8, Colour.RED)
+        self._widgetDip.set_dip_count(8)
 
     @Slot(bool)
-    def on__buttonSet_clicked(self, checked):
-        self._ledRun.light(not checked)
-        self._ledSet.light(checked)
-        self._widgetDip.enable(checked)
-
+    def on__buttonWrite_clicked(self, _checked):
         value = self._widgetDip.get()
-        self.signalSet.emit(checked, value)
+        self.signalWrite.emit(value)
+
+    def set_label(self, label, align=Qt.AlignLeft):
+        self._label.setText(label)
+        self._label.setAlignment(align)
+
+    def set_tooltip(self, tip):
+        self.setToolTip(tip)
 
     def set(self, value):
         self._widgetLeds.set(value)
-
-    def reset(self):
-        self._buttonSet.setChecked(False)
-        self.on__buttonSet_clicked(False)

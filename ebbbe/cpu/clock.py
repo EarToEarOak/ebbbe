@@ -69,11 +69,11 @@ class Clock(object):
             self._callback = callback
 
             self._halt = False
-            self._run = True
+            self._run = False
 
         def run(self):
             while not self._event.wait(1. / self._frequency):
-                if not self._run:
+                if self._run:
                     self.step()
 
         def step(self):

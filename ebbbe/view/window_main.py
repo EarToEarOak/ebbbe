@@ -29,7 +29,6 @@ import time
 
 from PySide.QtCore import Signal, Qt, Slot
 from PySide.QtGui import QMainWindow, QFileDialog, QMessageBox
-
 from ebbbe.view.dialog_about import DialogAbout
 from ebbbe.view.dialog_memory import DialogMemory
 from ebbbe.view.settings import Settings
@@ -43,6 +42,8 @@ from ebbbe.view.widget_out import WidgetOut
 from ebbbe.view.widget_pc import WidgetPc
 from ebbbe.view.widget_reg import WidgetReg
 from ebbbe.view.widget_seq import WidgetSeq
+
+from ebbbe.view.widget_ram import WidgetRam
 
 
 class WindowMain(QMainWindow):
@@ -66,12 +67,11 @@ class WindowMain(QMainWindow):
                               'WidgetReg': WidgetReg,
                               'WidgetSeq': WidgetSeq,
                               'WidgetFlags': WidgetFlags,
-                              'WidgetOut': WidgetOut}
+                              'WidgetOut': WidgetOut,
+                              'WidgetRam': WidgetRam}
 
         load_ui(self, 'window_main.ui')
 
-        self._widgetRam.set_label('RAM')
-        self._widgetRam.set_tooltip('RAM')
         self._widgetRegA.set_label('A', Qt.AlignRight)
         self._widgetRegA.set_tooltip('A Register (Accumulator)')
         self._widgetAlu.set_label('ALU', Qt.AlignRight)
@@ -86,6 +86,9 @@ class WindowMain(QMainWindow):
 
         self.signalUpdate.connect(self.__update)
         cpu.set_clock_listener(self.signalUpdate.emit)
+
+        self._widgetRam.signalWrite.connect(self.__set_ram_value)
+        self._widgetMar.signalSet.connect(self.__set_mar_value)
 
         self.__update(False)
 
@@ -127,11 +130,13 @@ class WindowMain(QMainWindow):
     @Slot()
     def on_actionResetSoft_triggered(self):
         self._cpu.reset_soft()
+        self._widgetMar.reset()
         self.__update(flash=False, force=True)
 
     @Slot()
     def on_actionResetHard_triggered(self):
         self._cpu.reset_hard()
+        self._widgetMar.reset()
         self.__update(flash=False, force=True)
 
     def __on_mem_closed(self):
@@ -166,3 +171,13 @@ class WindowMain(QMainWindow):
                 self.__update(False)
         except struct.error:
             QMessageBox.critical(self, 'Error', "Files should be 16 bytes in size")
+
+    def __set_ram_value(self, value):
+        self._cpu.set_ram_value(value)
+        self.__update(flash=False, force=True)
+
+    def __set_mar_value(self, setter, value):
+        self._widgetClock.enable(not setter)
+        self._cpu.set_mar(value)
+        self.__update(flash=False, force=True)
+

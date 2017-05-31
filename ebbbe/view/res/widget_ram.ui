@@ -6,12 +6,9 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>125</width>
-    <height>82</height>
+    <width>330</width>
+    <height>110</height>
    </rect>
-  </property>
-  <property name="toolTip">
-   <string>Memory Address Register</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
@@ -43,7 +40,7 @@
          </font>
         </property>
         <property name="text">
-         <string>MAR</string>
+         <string>RAM</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -51,38 +48,23 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item alignment="Qt::AlignHCenter">
-         <widget class="QPushButton" name="_buttonSet">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item alignment="Qt::AlignLeft">
+         <widget class="QPushButton" name="_buttonWrite">
           <property name="toolTip">
-           <string>Set the MAR</string>
+           <string>Write to RAM</string>
           </property>
           <property name="text">
-           <string>Set</string>
-          </property>
-          <property name="checkable">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="WidgetLed" name="_ledRun" native="true">
-          <property name="toolTip">
-           <string>Run</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="WidgetLed" name="_ledSet" native="true">
-          <property name="toolTip">
-           <string>Set</string>
+           <string>Write</string>
           </property>
          </widget>
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item alignment="Qt::AlignHCenter">
-           <widget class="WidgetLedBank" name="_widgetLeds" native="true"/>
+           <widget class="WidgetLedBank" name="_widgetLeds" native="true">
+            <zorder>_widgetDip</zorder>
+           </widget>
           </item>
           <item alignment="Qt::AlignHCenter">
            <widget class="WidgetDip" name="_widgetDip" native="true">
@@ -114,12 +96,6 @@
    <class>WidgetDip</class>
    <extends>QWidget</extends>
    <header location="global">widgetdip.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>WidgetLed</class>
-   <extends>QWidget</extends>
-   <header location="global">widgetled.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

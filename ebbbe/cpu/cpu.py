@@ -96,11 +96,17 @@ class Cpu(object):
     def get_mar(self):
         return self._mar.get()
 
+    def set_mar(self, value):
+        self._mar.set(value)
+
     def get_ram_dump(self):
         return self._ram.get_dump()
 
     def get_ram(self):
         return self._ram.get()
+
+    def set_ram_value(self, value):
+        self._ram.set_value(value)
 
     def get_bus(self):
         return self._bus.get()

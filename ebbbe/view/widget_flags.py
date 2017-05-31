@@ -40,7 +40,8 @@ class WidgetFlags(QWidget):
         load_ui(self, 'widget_flags.ui')
 
         self._widgetLedsControl.set_led_count(len(Cu.FLAG_NAMES), Colour.BLUE,
-                                              Cu.FLAG_NAMES, Cu.FLAG_TIPS)
+                                              Cu.FLAG_NAMES, Cu.FLAG_TIPS,
+                                              toolTip=False)
 
     def set(self, value):
         self._widgetLedsControl.set(value)

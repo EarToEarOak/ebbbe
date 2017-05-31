@@ -40,7 +40,7 @@ class WidgetSeq(QWidget):
 
         self._widgetLedSeq.set_led_count(3, Colour.RED, reverse=True)
         names = ['T0', 'T1', 'T2', 'T3', 'T4']
-        self._widgetLedStep.set_led_count(5, Colour.GREEN, names)
+        self._widgetLedStep.set_led_count(5, Colour.GREEN, names, toolTip=False)
 
     def set(self, value):
         self._widgetLedSeq.set(value)

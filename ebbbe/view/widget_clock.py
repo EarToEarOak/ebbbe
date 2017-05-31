@@ -51,12 +51,12 @@ class WidgetClock(QWidget):
     @Slot(bool)
     def on__buttonStep_clicked(self, _checked):
         self._buttonRun.setChecked(False)
-        self._periph.set_run(True)
+        self._periph.set_run(False)
         self._periph.step()
 
     @Slot(bool)
     def on__buttonRun_clicked(self, checked):
-        self._periph.set_run(not checked)
+        self._periph.set_run(checked)
 
     def __update(self):
         freq = self._dialFreq.value()
@@ -76,3 +76,9 @@ class WidgetClock(QWidget):
 
     def flash(self):
         self._ledClock.flash()
+
+    def enable(self, enabled):
+        self._buttonStep.setEnabled(enabled)
+        self._buttonRun.setEnabled(enabled)
+        self._buttonRun.setChecked(False)
+        self._periph.set_run(False)

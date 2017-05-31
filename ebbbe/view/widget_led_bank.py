@@ -35,13 +35,18 @@ class WidgetLedBank(QWidget):
         QWidget.__init__(self, parent)
 
         self._leds = []
+        self._toolTip = True
 
         self.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
 
         self._layout = QHBoxLayout(self)
         self.setLayout(self._layout)
 
-    def set_led_count(self, number, colour=Colour.RED, names=None, tips=None, reverse=False):
+    def set_led_count(self, number, colour=Colour.RED, names=None, tips=None,
+                      reverse=False, toolTip=True):
+
+        self._toolTip = toolTip
+
         labels = []
 
         for i in range(number):
@@ -74,6 +79,10 @@ class WidgetLedBank(QWidget):
                 labels[i].setToolTip(tips[i])
 
     def set(self, value):
+        if self._toolTip:
+            width = len(self._leds) // 4
+            self.setToolTip('0x{:0{}x} ({})'.format(value, width, value))
+
         for led in self._leds:
             led.light(value & 0b1)
             value >>= 1
