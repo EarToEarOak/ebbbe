@@ -49,7 +49,7 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item alignment="Qt::AlignLeft">
+        <item alignment="Qt::AlignHCenter">
          <widget class="QPushButton" name="_buttonWrite">
           <property name="toolTip">
            <string>Write to RAM</string>
@@ -62,9 +62,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item alignment="Qt::AlignHCenter">
-           <widget class="WidgetLedBank" name="_widgetLeds" native="true">
-            <zorder>_widgetDip</zorder>
-           </widget>
+           <widget class="WidgetLedBank" name="_widgetLeds" native="true"/>
           </item>
           <item alignment="Qt::AlignHCenter">
            <widget class="WidgetDip" name="_widgetDip" native="true">

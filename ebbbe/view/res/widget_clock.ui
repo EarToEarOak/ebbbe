@@ -54,7 +54,7 @@
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item alignment="Qt::AlignHCenter">
+          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
            <widget class="QDial" name="_dialFreq">
             <property name="toolTip">
              <string>Clock frequency</string>
@@ -78,7 +78,7 @@
           </item>
          </layout>
         </item>
-        <item alignment="Qt::AlignHCenter">
+        <item alignment="Qt::AlignRight">
          <widget class="QPushButton" name="_buttonStep">
           <property name="toolTip">
            <string>Generate a pulse</string>
@@ -91,7 +91,7 @@
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignHCenter">
+        <item alignment="Qt::AlignLeft">
          <widget class="QPushButton" name="_buttonRun">
           <property name="toolTip">
            <string>Start and stop the clock</string>
@@ -110,7 +110,7 @@
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignHCenter">
+        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
          <widget class="WidgetLed" name="_ledClock" native="true"/>
         </item>
        </layout>
